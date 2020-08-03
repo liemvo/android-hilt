@@ -1,10 +1,10 @@
+This repo is forked from googlecodelabs, I modified with some video guideline in Vietnamese video via [my channel|https://youtube.com/channel/UCWUpIu0Kk515i4-wfNom9VA. ] 
 # Using Hilt in your Android app
 
 This folder contains the source code for the "Using Hilt in your Android app" codelab.
 
 The codelab is built in multiple GitHub branches:
 * `master` is the codelab's starting point.
-* `solution` contains the solution to this codelab.
 
 
 # Introduction
