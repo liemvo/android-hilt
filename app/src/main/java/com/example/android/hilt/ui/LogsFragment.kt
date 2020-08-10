@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.hilt.data.Log
 import com.example.android.hilt.data.LoggerDataSource
@@ -48,8 +49,6 @@ class LogsFragment : Fragment() {
     private var _binding: FragmentLogsBinding? = null
     private val binding get() = _binding!!
     
-    private lateinit var recyclerView: RecyclerView
-    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,18 +60,13 @@ class LogsFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.recyclerView.setHasFixedSize(true)
-    }
-    
-    override fun onResume() {
-        super.onResume()
-        
-        logger.getAllLogs { logs ->
+        logger.liveData.observe(viewLifecycleOwner, Observer {
             binding.recyclerView.adapter =
                 LogsViewAdapter(
-                    logs,
+                    it,
                     dateFormatter
                 )
-        }
+        })
     }
     
     override fun onDestroy() {

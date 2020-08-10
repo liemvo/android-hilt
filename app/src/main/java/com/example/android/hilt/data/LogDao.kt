@@ -17,6 +17,7 @@
 package com.example.android.hilt.data
 
 import android.database.Cursor
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -28,7 +29,7 @@ import androidx.room.Query
 interface LogDao {
 
     @Query("SELECT * FROM logs ORDER BY id DESC")
-    fun getAll(): List<Log>
+    fun getAll(): LiveData<List<Log>>
 
     @Insert
     fun insertAll(vararg logs: Log)

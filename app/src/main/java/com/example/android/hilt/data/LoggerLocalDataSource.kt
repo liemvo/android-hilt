@@ -18,14 +18,15 @@ package com.example.android.hilt.data
 
 import android.os.Handler
 import android.os.Looper
+import androidx.lifecycle.LiveData
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import javax.inject.Inject
 import javax.inject.Singleton
 
 interface LoggerDataSource {
+    val liveData: LiveData<List<Log>>
     fun addLog(msg: String)
-    fun getAllLogs(callback: (List<Log>) -> Unit)
     fun removeLogs()
 }
 
@@ -34,11 +35,8 @@ interface LoggerDataSource {
  */
 @Singleton
 class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) : LoggerDataSource {
-    
+    override val liveData: LiveData<List<Log>> = logDao.getAll()
     private val executorService: ExecutorService = Executors.newFixedThreadPool(4)
-    private val mainThreadHandler by lazy {
-        Handler(Looper.getMainLooper())
-    }
     
     override fun addLog(msg: String) {
         executorService.execute {
@@ -48,13 +46,6 @@ class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) : Lo
                     System.currentTimeMillis()
                 )
             )
-        }
-    }
-    
-    override fun getAllLogs(callback: (List<Log>) -> Unit) {
-        executorService.execute {
-            val logs = logDao.getAll()
-            mainThreadHandler.post { callback(logs) }
         }
     }
     

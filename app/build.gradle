@@ -72,6 +72,10 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
+
+    // live data
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
     // Hilt testing dependency
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     // Make Hilt generate code in the androidTest folder
